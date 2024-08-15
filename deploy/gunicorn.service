@@ -1,0 +1,14 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/django_todo
+UMask=007
+ExecStartPre=/bin/bash -c 'mkdir -p /home/ubuntu/django_todo && chown ubuntu:www-data /home/ubuntu/django_todo'
+ExecStart=/home/ubuntu/django_todo/.venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:/home/ubuntu/django_todo/gunicorn.sock config.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
