@@ -1,4 +1,4 @@
-.PHONY: help pull-deploy push-deploy makemigrations migrate runserver superuser collectstatic test install-nginx uninstall-nginx install-gunicorn uninstall-gunicorn
+.PHONY: help pull-$(CONFIG_DIR) push-$(CONFIG_DIR) makemigrations migrate runserver superuser collectstatic test install-nginx uninstall-nginx install-gunicorn uninstall-gunicorn
 
 # Makefile
 
@@ -24,35 +24,37 @@ collectstatic: ## Collect static files
 test: ## Run tests
 	poetry run python manage.py test
 
-pull-deploy: 	## Pull Nginx and Gunicorn config into deploy/
-	@mkdir -p deploy
-	@if [ -f /etc/nginx/sites-available/django_todo_postgres ]; then cp /etc/nginx/sites-available/django_todo_postgres deploy/; fi
-	@if [ -f /etc/systemd/system/gunicorn.service ]; then cp /etc/systemd/system/gunicorn.service deploy/; fi
+DJANGO_ENVIRONMENT ?= development
+CONFIG_DIR := deploy/$(DJANGO_ENVIRONMENT)
+
+pull-deploy: 	## Pull Nginx and Gunicorn config into $(CONFIG_DIR)/
+	@mkdir -p $(CONFIG_DIR)
+	@if [ -f /etc/nginx/sites-available/todo ]; then cp /etc/nginx/sites-available/todo $(CONFIG_DIR)/; fi
+	@if [ -f /etc/systemd/system/todocorn.service ]; then cp /etc/systemd/system/todocorn.service $(CONFIG_DIR)/; fi
 
 push-deploy: 	## Push Nginx and Gunicorn config to system
-	@if [ -f deploy/django_todo_postgres ]; then \
-		sudo cp deploy/django_todo_postgres /etc/nginx/sites-available/; \
-		sudo ln -sf /etc/nginx/sites-available/django_todo_postgres /etc/nginx/sites-enabled/django_todo_postgres; \
+	@echo $(CONFIG_DIR)
+	@if [ -f $(CONFIG_DIR)/todo ]; then \
+		sudo cp $(CONFIG_DIR)/todo /etc/nginx/sites-available/; \
+		sudo ln -sf /etc/nginx/sites-available/todo /etc/nginx/sites-enabled/todo; \
 		sudo systemctl restart nginx; \
 	fi
-	@if [ -f deploy/gunicorn.service ]; then \
-		sudo cp deploy/gunicorn.service /etc/systemd/system; \
+	@if [ -f $(CONFIG_DIR)/todocorn.service ]; then \
+		sudo cp $(CONFIG_DIR)/todocorn.service /etc/systemd/system; \
 		sudo systemctl daemon-reload; \
-		sudo systemctl restart gunicorn; \
-		sudo systemctl enable gunicorn; \
+		sudo systemctl restart todocorn; \
+		sudo systemctl enable todocorn; \
 	fi
 
 run-gunicorn: install-gunicorn ## Run Gunicorn
 	gunicorn -c gunicorn_config.py config.wsgi
 
 
-reload-deploy: ## Reload deploy
+reload-deploy: ## Reload $(CONFIG_DIR)
 	sudo systemctl daemon-reload; \
-	sudo systemctl restart gunicorn; \
-	sudo systemctl enable gunicorn; \
+	sudo systemctl restart todocorn; \
+	sudo systemctl enable todocorn; \
 	sudo systemctl restart nginx; 
-
-
 
 install-nginx: ## Install Nginx
 	./scripts/install-nginx.sh
@@ -77,4 +79,3 @@ uninstall-gunicorn: ## Uninstall Gunicorn
 
 uninstall-db: ## Uninstall Postgres
 	./scripts/uninstall-db.sh
-
