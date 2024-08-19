@@ -272,6 +272,21 @@ files = [
 ]
 
 [[package]]
+name = "dj-database-url"
+version = "2.2.0"
+description = "Use Database URLs in your Django Application."
+optional = false
+python-versions = "*"
+files = [
+    {file = "dj_database_url-2.2.0-py3-none-any.whl", hash = "sha256:3e792567b0aa9a4884860af05fe2aa4968071ad351e033b6db632f97ac6db9de"},
+    {file = "dj_database_url-2.2.0.tar.gz", hash = "sha256:9f9b05058ddf888f1e6f840048b8d705ff9395e3b52a07165daa3d8b9360551b"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+typing_extensions = ">=3.10.0.0"
+
+[[package]]
 name = "django"
 version = "5.0.3"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -405,22 +420,23 @@ python-dateutil = ">=2.4"
 
 [[package]]
 name = "gunicorn"
-version = "21.2.0"
+version = "23.0.0"
 description = "WSGI HTTP Server for UNIX"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.7"
 files = [
-    {file = "gunicorn-21.2.0-py3-none-any.whl", hash = "sha256:3213aa5e8c24949e792bcacfc176fef362e7aac80b76c56f6b5122bf350722f0"},
-    {file = "gunicorn-21.2.0.tar.gz", hash = "sha256:88ec8bff1d634f98e61b9f65bc4bf3cd918a90806c6f5c48bc5603849ec81033"},
+    {file = "gunicorn-23.0.0-py3-none-any.whl", hash = "sha256:ec400d38950de4dfd418cff8328b2c8faed0edb0d517d3394e457c317908ca4d"},
+    {file = "gunicorn-23.0.0.tar.gz", hash = "sha256:f014447a0101dc57e294f6c18ca6b40227a4c90e9bdb586042628030cba004ec"},
 ]
 
 [package.dependencies]
 packaging = "*"
 
 [package.extras]
-eventlet = ["eventlet (>=0.24.1)"]
+eventlet = ["eventlet (>=0.24.1,!=0.36.0)"]
 gevent = ["gevent (>=1.4.0)"]
 setproctitle = ["setproctitle"]
+testing = ["coverage", "eventlet", "gevent", "pytest", "pytest-cov"]
 tornado = ["tornado (>=0.2)"]
 
 [[package]]
@@ -749,6 +765,20 @@ files = [
 six = ">=1.5"
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.1"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca"},
+    {file = "python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"},
+]
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
 name = "python3-openid"
 version = "3.2.0"
 description = "OpenID support for modern servers and consumers."
@@ -882,4 +912,4 @@ brotli = ["Brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "d18d3e08d3c7c86b0dfb815d3d6cda09b76e3f38aa9811eeb15de33567b97880"
+content-hash = "cf03b8d050652866ea9fcd142ed009e6cdec1ec6474b172924817868319533d2"

@@ -16,43 +16,13 @@ runserver: migrate ## Run the Django development server
 	poetry run python manage.py runserver
 
 superuser: ## Create a superuser
-	poetry run python manage.py createsuperuser
+	poetry run python manage.py createsuperuser --no-input
 
 collectstatic: ## Collect static files
 	poetry run python manage.py collectstatic --noinput
 
 test: ## Run tests
 	poetry run python manage.py test
-
-install-nginx: ## Install Nginx
-	sudo apt update
-	sudo apt install -y nginx
-
-uninstall-nginx: ## Uninstall Nginx
-	sudo systemctl stop nginx
-	sudo apt remove --purge nginx nginx-common nginx-full
-	sudo rm -rf /etc/nginx
-	sudo rm -rf /var/www/html
-	sudo rm -rf /var/log/nginx
-	sudo rm -rf /usr/sbin/nginx
-	sudo rm -rf /usr/share/nginx
-	sudo apt autoremove -y
-	sudo systemctl daemon-reload
-
-install-gunicorn: ## Install Gunicorn
-	poetry add gunicorn
-
-run-gunicorn: install-gunicorn ## Run Gunicorn
-	gunicorn -c gunicorn_config.py config.wsgi
-
-
-uninstall-gunicorn: ## Uninstall Gunicorn
-	sudo systemctl stop gunicorn
-	sudo systemctl disable gunicorn
-	sudo rm /etc/systemd/system/gunicorn.service
-	sudo systemctl daemon-reload
-	poetry remove gunicorn
-
 
 pull-deploy: 	## Pull Nginx and Gunicorn config into deploy/
 	@mkdir -p deploy
@@ -72,8 +42,39 @@ push-deploy: 	## Push Nginx and Gunicorn config to system
 		sudo systemctl enable gunicorn; \
 	fi
 
+run-gunicorn: install-gunicorn ## Run Gunicorn
+	gunicorn -c gunicorn_config.py config.wsgi
+
+
 reload-deploy: ## Reload deploy
 	sudo systemctl daemon-reload; \
 	sudo systemctl restart gunicorn; \
 	sudo systemctl enable gunicorn; \
-	sudo systemctl restart nginx;
+	sudo systemctl restart nginx; 
+
+
+
+install-nginx: ## Install Nginx
+	./scripts/install-nginx.sh
+
+install-gunicorn: ## Install Gunicorn
+	poetry add gunicorn
+
+install-db: ## Install Postgres
+	./scripts/install-db.sh
+
+setup-db: ## Create the database
+	python scripts/setup-db.py > ./scripts/createdb.sql
+	sudo -u postgres psql < ./scripts/createdb.sql
+	rm ./scripts/createdb.sql # it contains sensitive information!
+
+
+uninstall-nginx: ## Uninstall Nginx
+	./scripts/uninstall-nginx.sh
+
+uninstall-gunicorn: ## Uninstall Gunicorn
+	./scripts/uninstall-gunicorn.sh
+
+uninstall-db: ## Uninstall Postgres
+	./scripts/uninstall-db.sh
+

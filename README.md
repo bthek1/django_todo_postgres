@@ -2,7 +2,8 @@
 
 
 
-## Install poetry 
+## Installation
+### poetry 
 ```sh
 curl -sSL https://install.python-poetry.org | python3 -
 ```
@@ -11,6 +12,57 @@ curl -sSL https://install.python-poetry.org | python3 -
 ```sh
 poetry config virtualenvs.in-project true
 ```
+### Install direnv
+```sh
+sudo apt install direnv
+```
+
+### Install dependencies
+```sh
+poetry install
+direnv allow
+```
+
+### Create .env file
+
+### Install Postgres
+```sh
+make install-db
+```
+
+### Create superuser
+```sh
+make superuser
+```
+
+
+## RUN
+```sh
+make runserver
+```
+
+
+## Production
+### Install Nginx, Gunicorn, Postgres
+```sh
+make install-nginx
+make install-gunicorn
+make install-db
+```
+
+### Migrate
+```sh
+make migrate
+make push-deploy
+```
+
+### Create superuser
+```sh
+make superuser
+```
+
+### Go to IP/admin
+
 
 ## Testing
 
