@@ -1,4 +1,4 @@
-.PHONY: help pull-$(CONFIG_DIR) push-$(CONFIG_DIR) makemigrations migrate runserver superuser collectstatic test install-nginx uninstall-nginx install-gunicorn uninstall-gunicorn
+.PHONY: help pull-deploy push-deploy makemigrations migrate runserver superuser collectstatic test install-nginx uninstall-nginx install-gunicorn uninstall-gunicorn
 
 # Makefile
 
@@ -50,7 +50,7 @@ run-gunicorn: install-gunicorn ## Run Gunicorn
 	gunicorn -c gunicorn_config.py config.wsgi
 
 
-reload-deploy: ## Reload $(CONFIG_DIR)
+reload-deploy: ## Reload deploy
 	sudo systemctl daemon-reload; \
 	sudo systemctl restart todocorn; \
 	sudo systemctl enable todocorn; \
@@ -76,6 +76,10 @@ uninstall-nginx: ## Uninstall Nginx
 
 uninstall-gunicorn: ## Uninstall Gunicorn
 	./scripts/uninstall-gunicorn.sh
+
+uninstall-todocorn: ## Uninstall Todocorn
+	./scripts/uninstall-todocorn.sh
+
 
 uninstall-db: ## Uninstall Postgres
 	./scripts/uninstall-db.sh
