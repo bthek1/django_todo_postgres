@@ -27,7 +27,7 @@ direnv allow
 
 ### Install Postgres
 ```sh
-make install-db
+make install_db
 ```
 
 ### Create superuser
@@ -45,15 +45,15 @@ make runserver
 ## Production
 ### Install Nginx, Gunicorn, Postgres
 ```sh
-make install-nginx
-make install-gunicorn
-make install-db
+make install_nginx
+make install_gunicorn
+make install_db
 ```
 
 ### Migrate
 ```sh
 make migrate
-make push-deploy
+make push_deploy
 ```
 
 ### Create superuser

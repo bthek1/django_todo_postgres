@@ -7,10 +7,10 @@ upstream app_server {
   
 server {
     listen 80;
-    server_name 172.22.251.200;
+    server_name 159.13.42.51;
 
     location /static/ {
-        alias /home/ben-24/Example_project/django_todo_postgres/static/;
+        alias /home/ubuntu/django_todo_postgres/static/;
     }
 
     location / {
