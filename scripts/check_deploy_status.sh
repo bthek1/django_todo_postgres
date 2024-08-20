@@ -20,7 +20,7 @@ check_services() {
     echo "Checking service status..."
 
     check_service_status nginx "Nginx"
-    check_service_status todo-unicorn "Todo-unicorn (Gunicorn)"
+    check_service_status todocorn "Todocorn (Gunicorn)"
     check_service_status postgresql "PostgreSQL"
     
     echo "Service check completed."
