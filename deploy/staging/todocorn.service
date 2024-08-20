@@ -1,0 +1,14 @@
+[Unit]
+Description=todocorn daemon
+After=network.target
+
+[Service]
+User=ben-24
+Group=www-data
+WorkingDirectory=/home/ben-24/Example_project/django_todo_postgres
+UMask=007
+ExecStartPre=/bin/bash -c 'mkdir -p /home/ben-24/Example_project/django_todo_postgres && chown ben-24:www-data /home/ben-24/Example_project/django_todo_postgres'
+ExecStart=/home/ben-24/Example_project/django_todo_postgres/.venv/bin/gunicorn --bind 127.0.0.1:8000 config.wsgi:application --config /home/ben-24/Example_project/django_todo_postgres/gunicorn.conf.py
+
+[Install]
+WantedBy=multi-user.target

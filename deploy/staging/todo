@@ -1,0 +1,24 @@
+upstream app_server {
+    # fail_timeout=0 means we always retry an upstream even if it failed
+    # to return a good HTTP response
+    server 127.0.0.1:8000 fail_timeout=0;
+  }
+  
+  
+server {
+    listen 80;
+    server_name 172.22.251.200;
+
+    location /static/ {
+        alias /home/ben-24/Example_project/django_todo_postgres/static/;
+    }
+
+    location / {
+        # include proxy_params;
+        proxy_pass http://app_server;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
