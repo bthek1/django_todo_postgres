@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from .serializers import ToDoSerializer
 from rest_framework.permissions import IsAuthenticated
 
+
 class ToDoViewSet(viewsets.ModelViewSet):
     serializer_class = ToDoSerializer
     permission_classes = [IsAuthenticated]
@@ -24,14 +25,16 @@ def add_todo(request):
             todo = form.save(commit=False)
             todo.user = request.user
             todo.save()
-            return redirect('list_todo')  # Redirect to a view that lists the todos
+            return redirect('list_todo')  # Redirect to your todo list view
+        else:
+            # Add this to check for form validation errors
+            print(form.errors)
     else:
         form = ToDoForm()
 
-    return render(request, 'add_todo.html', {'form': form})
-
+    return render(request, 'todos/add_todo.html', {'form': form})
 
 @login_required
 def todo_list(request):
     todos = ToDo.objects.filter(user=request.user)
-    return render(request, 'list_todo.html', {'todos': todos})
+    return render(request, 'todos/list_todo.html', {'todos': todos})

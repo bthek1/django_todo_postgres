@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New ToDo{% endblock %}
+
+{% block content %}
+    <h1>Add a New ToDo</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        {% crispy form %}
+        
+    </form>
+{% endblock %}
