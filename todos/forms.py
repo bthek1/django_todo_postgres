@@ -46,7 +46,7 @@ class ToDoForm(forms.Form):
         todo = ToDo(
             title=self.cleaned_data['title'],
             description=self.cleaned_data['description'],
-            completed=self.cleaned_data['completed'],
+            completed=self.cleaned_data['complete'],
             user=user
         )
         todo.save()

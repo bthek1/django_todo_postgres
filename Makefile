@@ -72,11 +72,16 @@ install-gunicorn: ## Install Gunicorn
 install-db: ## Install Postgres
 	./scripts/install_db.sh
 
+
 setup-db: ## Create the database
 	python scripts/setup_db.py > ./scripts/createdb.sql
 	sudo -u postgres psql < ./scripts/createdb.sql
 	rm ./scripts/createdb.sql # it contains sensitive information!
 
+remove-db: ## Remove the database
+	python scripts/remove_db.py > ./scripts/dropdb.sql
+	sudo -u postgres psql < ./scripts/dropdb.sql
+	rm ./scripts/dropdb.sql # it contains sensitive information!
 
 uninstall-nginx: ## Uninstall Nginx
 	./scripts/uninstall_nginx.sh
