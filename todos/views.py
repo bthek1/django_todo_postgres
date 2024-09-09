@@ -22,9 +22,7 @@ def add_todo(request):
     if request.method == 'POST':
         form = ToDoForm(request.POST)
         if form.is_valid():
-            todo = form.save(commit=False)
-            todo.user = request.user
-            todo.save()
+            form.save(user = request.user)
             return redirect('list_todo')  # Redirect to your todo list view
         else:
             # Add this to check for form validation errors
