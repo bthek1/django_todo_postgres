@@ -5,8 +5,8 @@
 /* VARIABLE DEFINITIONS */
 html[data-theme="light"],
 :root {
-    --primary: #79aec8;
-    --secondary: #417690;
+    --primary: #439016;
+    --secondary: #1d8535;
     --accent: #f5dd5d;
     --primary-fg: #fff;
 
@@ -18,14 +18,14 @@ html[data-theme="light"],
     --header-color: #ffc;
     --header-branding-color: var(--accent);
     --header-bg: var(--secondary);
-    --header-link-color: var(--primary-fg);
+    
 
-    --breadcrumbs-fg: #c4dce8;
+    --breadcrumbs-fg: #95db83;
     --breadcrumbs-link-fg: var(--body-bg);
-    --breadcrumbs-bg: #264b5d;
+    --breadcrumbs-bg: #265d26;
 
-    --link-fg: #417893;
-    --link-hover-color: #036;
+    --link-fg: #1a852c;
+    --link-hover-color: rgb(27, 94, 2);
     --link-selected-fg: var(--secondary);
 
     --hairline-color: #e8e8e8;
@@ -43,8 +43,8 @@ html[data-theme="light"],
 
     --button-fg: #fff;
     --button-bg: var(--secondary);
-    --button-hover-bg: #205067;
-    --default-button-bg: #205067;
+    --button-hover-bg: #277414;
+    --default-button-bg: #3f6720;
     --default-button-hover-bg: var(--secondary);
     --close-button-bg: #747474;
     --close-button-hover-bg: #333;
