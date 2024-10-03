@@ -18,6 +18,14 @@ runserver: migrate ## Run the Django development server
 superuser: ## Create a superuser
 	python manage.py createsuperuser --no-input
 
+flush: ## Flush the database
+	python manage.py flush
+
+flood:
+	python manage.py create_test_data
+
+reset: flush makemigrations migrate superuser flood ## Reset the database
+
 collectstatic: ## Collect static files
 	python manage.py collectstatic --noinput
 
