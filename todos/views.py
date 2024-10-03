@@ -48,3 +48,8 @@ def add_todo(request):
 def todo_list(request):
     todos = ToDo.objects.filter(user=request.user)
     return render(request, 'todos/list_todo.html', {'todos': todos})
+
+
+def user_list(request):
+    users = CustomUser.objects.all()  # Fetch all users
+    return render(request, 'todos/userlist.html', {'users': users})

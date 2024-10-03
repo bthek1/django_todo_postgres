@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ToDoViewSet, UserViewSet, add_todo, todo_list
+from .views import ToDoViewSet, UserViewSet, add_todo, todo_list, user_list
 
 # Set up the DRF router
 router = DefaultRouter()
@@ -11,5 +11,6 @@ router.register(r'users', UserViewSet, basename='user')  # Explicitly specify th
 urlpatterns = [
     path('add/', add_todo, name='add_todo'),  # URL for the form view to add a new todo
     path('list/', todo_list, name='list_todo'),  # URL for the list view to display todos
+    path('users/', user_list, name='user_list'),
     path('', include(router.urls)),  # Include the DRF router-generated URLs
 ]
